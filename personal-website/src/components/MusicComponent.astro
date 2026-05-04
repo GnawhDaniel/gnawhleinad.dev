@@ -1,0 +1,32 @@
+---
+interface Props {
+  id: string;
+  videoPath: string;
+  caption: string;
+  width?: string;
+  label: "cover" | "original";
+}
+const { id, videoPath, caption, width = "60%", label } = Astro.props;
+---
+
+<div id={id} class="card">
+  <video controls style={`width: ${width}`}>
+    <source src={videoPath} type="video/mp4" />
+  </video>
+  <p>{caption} ({label})</p>
+</div>
+
+<style>
+  .card {
+    margin: auto;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 4em;
+  }
+
+  video {
+    border-radius: 0.25rem;
+  }
+</style>

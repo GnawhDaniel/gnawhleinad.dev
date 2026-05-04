@@ -1,0 +1,32 @@
+---
+interface Props {
+  header: string;
+  url: string;
+  linkText: string;
+}
+
+const { header, url, linkText } = Astro.props;
+---
+
+<div class="content">
+  <h2>{header}</h2>
+  <a href={url}>{linkText}</a>
+</div>
+
+<style>
+  h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .content a {
+    margin-top: auto;
+    margin-bottom: 3px;
+  }
+</style>

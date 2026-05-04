@@ -1,0 +1,11 @@
+.venv
+.env
+__pycache__
+video/
+music/
+test.js
+test.py
+server/
+.vscode
+tools/
+public/video

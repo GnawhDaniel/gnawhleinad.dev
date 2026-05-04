@@ -1,0 +1,228 @@
+---
+import Carousel from "./Carousel.astro";
+import { formatDateCST } from "../utils/date";
+import Section from "./Section.astro";
+import ThumbnailComponent from "./ThumbnailComponent.astro";
+
+
+// const latestNote = await db
+//   .select({
+//     id: Notes.id,
+//     datetime: Notes.datetime,
+//     content: Notes.content,
+//     likes: Notes.likes,
+//     hashtags: sql<string[]>`json_group_array(${Hashtags.hashtag})`,
+//   })
+//   .from(Notes)
+//   .leftJoin(NoteHashtags, eq(Notes.id, NoteHashtags.note_id))
+//   .leftJoin(Hashtags, eq(NoteHashtags.hashtag_id, Hashtags.id))
+//   .groupBy(Notes.id)
+//   .orderBy(desc(Notes.datetime))
+//   .limit(1)
+//   .then((rows) => rows[0] ?? null);
+---
+
+<!-- About Me -->
+<header>
+  <h1>Daniel Hwang</h1>
+  <p id="status"></p>
+</header>
+<main>
+  <div class="about-me">
+    <p>
+      A dude on internet. Enjoys building and learning tech. Loves digging for
+      new music and artists, particularly within the Japanese rock scene.
+    </p>
+    <p>Lives in the States where the summers are way too hot and humid.</p>
+    <p>
+      Currently spends time learning from HTB, learning Japanese, and tinkering
+      on a home server.
+    </p>
+  </div>
+
+  <!-- Links -->
+  <nav class="professional">
+    <a href="/pages/cv">
+      CV
+    </a>
+  </nav>
+  <nav class="pages">
+    <a href="/pages/bookmarks">
+      Bookmarks
+    </a>
+  </nav>
+  <nav class="socials">
+    <a href="https://github.com/GnawhDaniel">
+      GitHub
+    </a>
+    <a href="https://koito.gnawhleinad.dev">
+      Scrobbles
+    </a>
+    <a
+      href="https://profile.hackthebox.com/profile/019deff2-53ee-712a-ad31-50b2516d146b"
+    >
+      Hack The Box
+    </a>
+  </nav>
+
+  <!-- <hr class="hr">
+
+  <Section header="Notes" url="/notes" linkText="All" />
+  <div class="latest-note">
+    <p class="note-datetime">
+      {formatDateCST(latestNote.datetime)}
+    </p>
+    <p class="note-content">
+      {latestNote.content}
+    </p>
+    <p>
+      {
+        () => {
+          const parsedHashtags = (
+            JSON.parse(latestNote.hashtags as unknown as string) as string[]
+          ).filter(Boolean);
+          return (
+            <div class="note-hashtags">
+              {parsedHashtags.map((hashtag) => (
+                <p class="hashtag">#{hashtag} </p>
+              ))}
+            </div>
+          );
+        }
+      }
+    </p>
+  </div> -->
+
+  <hr class="hr">
+
+  <Carousel header="Music" url="/music">
+    <a
+      slot="media"
+      href="/music#b5d2279fdc165836ff39d246538c1807"
+      aria-label="Redirect to guitar cover of My Color from To Be Hero X"
+    >
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/To Be Hero X - My Color [Cover].png"
+        altText=""
+        width={250}
+      />
+    </a>
+    <a
+      slot="media"
+      href="/music#2cb18aa1f29b226d6b1ee8eac9d205f4"
+      aria-label="Redirect to one of my original songs titled 'spring was ours for the taking'."
+    >
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/spring was ours for the taking.png"
+        altText=""
+        width={250}
+      />
+    </a>
+    <a
+      slot="media"
+      href="/music#d1690da41ac115ecdd7f988f27becd4b"
+      aria-label=""
+    >
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/lite - ghost dance [Cover].png"
+        altText=""
+        width={170}
+      />
+    </a>
+    <a slot="media" href="/music#9a38723d30eddebd0a7e27ff5d17d785">
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/demo3.png"
+        altText=""
+        width={141}
+      />
+    </a>
+    <a slot="media" href="/music#50c2efc2d08f1d76a06319933d2cda96">
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/tricot - melon soda [Cover].png"
+        altText=""
+        width={250}
+      />
+    </a>
+    <a slot="media" href="/music#91da7acdd1d05626df7de7172f9a3fb6">
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/kessoku band - karakara [Cover].png"
+        altText=""
+        width={250}
+      />
+    </a>
+    <a slot="media" href="/music#60ca07383a45c0867048fbf5496da79e">
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/Brandy Senki - Coming of Age Story [Cover].png"
+        altText=""
+        width={250}
+      />
+    </a>
+    <a slot="media" href="/music#85ba4e70f61906d53b48b51932c57260">
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/Tatsuya Maruyama - Tokyo Bay.png"
+        altText=""
+        width={250}
+      />
+    </a>
+    <a slot="media" href="/music#c938ae2fdbb5e5673e4262a7c4775db5">
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/song2.png"
+        altText=""
+        width={250}
+      />
+    </a>
+    <a slot="media" href="/music#81c1502540870f8c9726883fdd1e80f9">
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/song 1.png"
+        altText=""
+        width={80}
+      />
+    </a>
+    <a slot="media" href="/music#81c1502540870f8c9726883fdd1e80f9">
+      <ThumbnailComponent
+        imagePath="/src/assets/thumbnails/THE ORAL CIGARETTES - Kyouran Hey Kids!! [Cover].png"
+        altText=""
+        width={250}
+      />
+    </a>
+  </Carousel>
+</main>
+
+<style>
+  video {
+    max-width: 400px;
+  }
+
+  img {
+    max-width: 250px;
+    border-radius: 0.2rem;
+  }
+
+  .note-datetime {
+    font-size: 0.9em;
+    color: var(--color-secondary-text);
+  }
+
+  .note-hashtags {
+    display: flex;
+    gap: 0.8em;
+    font-size: 12px;
+    color: whitesmoke;
+  }
+
+  .hr {
+    border: none;
+    height: 0.8rem;
+    width: 0.8rem;
+    background-color: var(--color-primary-text);
+    margin-left: 0;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    transform: rotate(45deg);
+  }
+
+  nav {
+    display: flex;
+    gap: 1rem;
+  }
+</style>
