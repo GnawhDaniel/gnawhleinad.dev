@@ -3,23 +3,11 @@ import Carousel from "./Carousel.astro";
 import { formatDateCST } from "../utils/date";
 import Section from "./Section.astro";
 import ThumbnailComponent from "./ThumbnailComponent.astro";
+import { getCollection, render } from "astro:content";
 
-
-// const latestNote = await db
-//   .select({
-//     id: Notes.id,
-//     datetime: Notes.datetime,
-//     content: Notes.content,
-//     likes: Notes.likes,
-//     hashtags: sql<string[]>`json_group_array(${Hashtags.hashtag})`,
-//   })
-//   .from(Notes)
-//   .leftJoin(NoteHashtags, eq(Notes.id, NoteHashtags.note_id))
-//   .leftJoin(Hashtags, eq(NoteHashtags.hashtag_id, Hashtags.id))
-//   .groupBy(Notes.id)
-//   .orderBy(desc(Notes.datetime))
-//   .limit(1)
-//   .then((rows) => rows[0] ?? null);
+const recentNote = (await getCollection("notes")).sort(
+  (a, b) => b.data.datetime.valueOf() - a.data.datetime.valueOf(),
+)[0];
 ---
 
 <!-- About Me -->
@@ -41,23 +29,15 @@ import ThumbnailComponent from "./ThumbnailComponent.astro";
   </div>
 
   <!-- Links -->
-  <nav class="professional">
-    <a href="/pages/cv">
-      CV
-    </a>
-  </nav>
+  <!-- <nav class="professional">
+    <a href="/pages/cv"> CV </a>
+  </nav> -->
   <nav class="pages">
-    <a href="/pages/bookmarks">
-      Bookmarks
-    </a>
+    <a href="/bookmarks"> Bookmarks </a>
   </nav>
   <nav class="socials">
-    <a href="https://github.com/GnawhDaniel">
-      GitHub
-    </a>
-    <a href="https://koito.gnawhleinad.dev">
-      Scrobbles
-    </a>
+    <a href="https://github.com/GnawhDaniel"> GitHub </a>
+    <a href="https://koito.gnawhleinad.dev"> Scrobbles </a>
     <a
       href="https://profile.hackthebox.com/profile/019deff2-53ee-712a-ad31-50b2516d146b"
     >
@@ -65,35 +45,31 @@ import ThumbnailComponent from "./ThumbnailComponent.astro";
     </a>
   </nav>
 
-  <!-- <hr class="hr">
+  <hr class="hr" />
 
   <Section header="Notes" url="/notes" linkText="All" />
   <div class="latest-note">
     <p class="note-datetime">
-      {formatDateCST(latestNote.datetime)}
+      {formatDateCST(recentNote.data.datetime)}
     </p>
-    <p class="note-content">
-      {latestNote.content}
-    </p>
-    <p>
-      {
-        () => {
-          const parsedHashtags = (
-            JSON.parse(latestNote.hashtags as unknown as string) as string[]
-          ).filter(Boolean);
-          return (
-            <div class="note-hashtags">
-              {parsedHashtags.map((hashtag) => (
-                <p class="hashtag">#{hashtag} </p>
-              ))}
-            </div>
-          );
-        }
+    {
+      async () => {
+        const { Content } = await render(recentNote);
+        return (
+          <Content/>
+        )
       }
-    </p>
-  </div> -->
+    }
+    <div class="note-hashtags">
+      {
+        recentNote.data.hashtags.map((hashtag) => (
+          <p class="hashtag">{hashtag}</p>
+        ))
+      }
+    </div>
+  </div>
 
-  <hr class="hr">
+  <hr class="hr" />
 
   <Carousel header="Music" url="/music">
     <a
@@ -189,6 +165,7 @@ import ThumbnailComponent from "./ThumbnailComponent.astro";
 </main>
 
 <style>
+
   video {
     max-width: 400px;
   }
@@ -212,8 +189,8 @@ import ThumbnailComponent from "./ThumbnailComponent.astro";
 
   .hr {
     border: none;
-    height: 0.8rem;
-    width: 0.8rem;
+    height: 0.6rem;
+    width: 0.6rem;
     background-color: var(--color-primary-text);
     margin-left: 0;
     margin-top: 3rem;

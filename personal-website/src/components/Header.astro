@@ -1,0 +1,37 @@
+---
+import Back from "./Back.astro";
+
+interface Props {
+  title: string;
+  url?: string;
+}
+
+const { title, url = "/" } = Astro.props;
+---
+
+<header>
+  <div class="header">
+    <a href={url}><Back /></a>
+    <h1>
+      <span>Daniel Hwang</span>
+    </h1>
+  </div>
+  <h1>{title}</h1>
+</header>
+
+<style>
+  .header {
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-header);
+    gap: 0.4rem;
+  }
+
+  .header h1 {
+    font-size: var(--font-size-header);
+  }
+
+  .header a {
+    display: flex;
+  }
+</style>

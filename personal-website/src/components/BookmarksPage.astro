@@ -1,0 +1,39 @@
+---
+import Header from "./Header.astro";
+---
+
+<Header title="Bookmarks" />
+<main>
+  <div class="bookmark-section">
+    <h2>Tech References</h2>
+    <ul>
+      <li>
+        <a
+          href="https://www.digitalocean.com/community/tutorials/how-to-set-up-wireguard-on-ubuntu-20-04"
+          >Setting Up Wireguard</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04"
+          >Secure Nginx with Let's Encrypt</a
+        >
+      </li>
+      <li>
+        <a href="https://pve.proxmox.com/wiki/Linux_Container#_bind_mount_points">
+          Bind Mounts in Proxmox
+        </a>
+      </li>
+    </ul>
+  </div>
+</main>
+
+<style>
+  .bookmark-section h2 {
+    margin-bottom: 0.4rem;
+  }
+  .bookmark-section ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+</style>

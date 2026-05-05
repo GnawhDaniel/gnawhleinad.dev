@@ -1,20 +1,19 @@
 ---
-import { getCollection, render } from 'astro:content';
 import { formatDateCST } from '../utils/date';
+import { getCollection, render } from 'astro:content';
+import Header from './Header.astro';
 
-const posts = await getCollection("notes");
+const posts = (await getCollection("notes")).sort(
+  (a, b) => b.data.datetime.valueOf() - a.data.datetime.valueOf(),
+);
 ---
-
-<header>
-  <h1>Daniel Hwang</h1>
-  <h1>Notes</h1>
-</header>
+<Header title="Notes"/>
 <main>
     {posts.map(async (post) => {
       const { Content } = await render(post);
       return (
         <div class="note">
-          <p class="note-datetime">{formatDateCST(post.data.datetime)}</p>
+          <a href=`/notes/${post.id}` class="note-datetime">{formatDateCST(post.data.datetime)}</a>
           <Content />
           <div class="note-hashtags">
             {
@@ -30,10 +29,11 @@ const posts = await getCollection("notes");
 </main>
 
 <style>
+
+
   .note {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1em;
   }
 
   .note-content {
@@ -51,25 +51,5 @@ const posts = await getCollection("notes");
     font-size: 12px;
     color: whitesmoke;
   }
+
 </style>
-
-
-    <!-- {
-      notes.map(({ datetime, content, likes, hashtags }) => {
-        const parsedHashtags = (
-          JSON.parse(hashtags as unknown as string) as string[]
-        ).filter(Boolean);
-        return (
-          <div class="note">
-            <p class="note-datetime">{formatDateCST(datetime)}</p>
-            <p>{content}</p>
-            <div class="note-hashtags">
-              {parsedHashtags.map((hashtag) => (
-                <p class="hashtag">#{hashtag} </p>
-              ))}
-            </div> 
-          </div>
-          <hr />
-        );
-      })
-    } -->

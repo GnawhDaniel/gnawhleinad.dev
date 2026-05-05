@@ -1,12 +1,16 @@
 ---
 import MusicComponent from "./MusicComponent.astro";
+import Header from "./Header.astro";
 ---
 
-<header>
-  <span>Daniel Hwang</span>
-  <h1>Music</h1>
-</header>
+<Header title="Music" />
 <main>
+  <iframe
+    src="https://listenbrainz.org/user/bcore._/embed/playing-now"
+    frameborder="0"
+    width="650"
+    height="80">
+  </iframe>
   <MusicComponent
     id="b5d2279fdc165836ff39d246538c1807"
     videoPath="video/music/covers/To Be Hero X - My Color [Cover].mp4"
@@ -77,4 +81,10 @@ import MusicComponent from "./MusicComponent.astro";
     label="cover"
   />
 </main>
-<style></style>
+<style>
+  iframe {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 3rem;
+  }
+</style>

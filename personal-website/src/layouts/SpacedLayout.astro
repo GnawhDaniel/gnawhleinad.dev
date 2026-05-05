@@ -15,15 +15,37 @@ import { Font } from "astro:assets";
   </head>
   <body>
     <slot />
+    <hr class="hr">
+    <footer>
+      <a href="https://github.com/GnawhDaniel/gnawhleinad.dev">Source Code</a>
+    </footer>
+
   </body>
 </html>
 
 <style is:global>
+  footer {
+    margin-bottom: 2rem;
+    font-size: 12px;
+  }
+  
+  .hr {
+    border: none;
+    height: 0.6rem;
+    width: 0.6rem;
+    background-color: var(--color-primary-text);
+    margin-left: 0;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    transform: rotate(45deg);
+  }
+
   :root {
     --color-bg: rgb(19, 19, 19);
     --color-primary-text: rgb(204, 204, 204);
     --font-size-base: 16px;
     --color-secondary-text: rgb(140, 140, 140);
+    --font-size-header: 25px;
   }
 
   html,
@@ -34,8 +56,8 @@ import { Font } from "astro:assets";
     background-color: var(--color-bg);
     color: var(--color-primary-text);
 
-    min-width: 40rem;
-    max-width: 40rem;
+    /* min-width: 40rem; */
+    width: 40rem;
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -43,6 +65,5 @@ import { Font } from "astro:assets";
 
   a,
   a:visited {
-    color: rgb(87, 87, 237);
-  }
+    color: rgb(119, 190, 255);  }
 </style>
