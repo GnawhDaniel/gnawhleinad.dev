@@ -10,8 +10,8 @@ export async function getLikes(media: string, media_id: string) {
     .select()
     .from(likesTable)
     .where(and(eq(likesTable.media, media), eq(likesTable.media_id, media_id)));
-  return like.likes;
-}
+  return (like && like.likes) || 0;
+} 
 
 export async function incrementLike(media: string, media_id: string) {
   const [like] = await db

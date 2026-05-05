@@ -36,7 +36,7 @@ const { media, media_id } = Astro.props;
     ).then((r) => r.json());
 
     button.addEventListener("click", async (event) => {
-      localStorage.setItem("liked", "thank you! <3");
+      localStorage.setItem(`liked_${media}_${mediaId}`, "thank you! <3");
 
       // Update like counter (server-side)
       await fetch("/api/likes", {
@@ -49,12 +49,17 @@ const { media, media_id } = Astro.props;
       button.disabled = true;
     });
 
-    if (localStorage.getItem("liked")) {
+    if (localStorage.getItem(`liked_${media}_${mediaId}`)) {
       button.disabled = true;
       button.textContent = `Liked! (${likes})`;
     } else
     {
-      button.textContent = `Like? (${likes})`;
+      if (likes) {
+        button.textContent = `Like? (${likes})`;
+      }
+      else {
+        button.textContent = `Like?`;
+      }
     }
   });
 </script>
