@@ -1,0 +1,60 @@
+---
+interface Props {
+  media: string;
+  media_id: string;
+}
+
+const { media, media_id } = Astro.props;
+---
+
+<span>
+  <button class="like-button" data-media={media} data-media-id={media_id}>
+  </button>
+</span>
+
+<style>
+  button {
+    background: none;
+    color: var(--font-text-color);
+    border: none;
+  }
+  button:not(:disabled):hover {
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".like-button");
+
+  buttons.forEach(async (button) => {
+    const media = button.dataset.media || "";
+    const mediaId = button.dataset.mediaId || "";
+
+    // Get likes (client-side)
+    const { likes: likes } = await fetch(
+      `/api/likes?media=${media}&media_id=${mediaId}`,
+    ).then((r) => r.json());
+
+    button.addEventListener("click", async (event) => {
+      localStorage.setItem("liked", "thank you! <3");
+
+      // Update like counter (server-side)
+      await fetch("/api/likes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ media: media, media_id: mediaId }),
+      });
+
+      button.textContent = `Liked! (${likes + 1})`; // optimtimistic update
+      button.disabled = true;
+    });
+
+    if (localStorage.getItem("liked")) {
+      button.disabled = true;
+      button.textContent = `Liked! (${likes})`;
+    } else
+    {
+      button.textContent = `Like? (${likes})`;
+    }
+  });
+</script>

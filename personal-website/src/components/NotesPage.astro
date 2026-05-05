@@ -2,6 +2,7 @@
 import { formatDateCST } from '../utils/date';
 import { getCollection, render } from 'astro:content';
 import Header from './Header.astro';
+import Like from './Like.astro';
 
 const posts = (await getCollection("notes")).sort(
   (a, b) => b.data.datetime.valueOf() - a.data.datetime.valueOf(),
@@ -14,6 +15,7 @@ const posts = (await getCollection("notes")).sort(
       return (
         <div class="note">
           <a href=`/notes/${post.id}` class="note-datetime">{formatDateCST(post.data.datetime)}</a>
+          <Like media="notes" media_id={post.id} />
           <Content />
           <div class="note-hashtags">
             {
