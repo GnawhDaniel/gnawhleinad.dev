@@ -14,8 +14,10 @@ const posts = (await getCollection("notes")).sort(
       const { Content } = await render(post);
       return (
         <div class="note">
-          <a href=`/notes/${post.id}` class="note-datetime">{formatDateCST(post.data.datetime)}</a>
-          <Like media="notes" media_id={post.id} />
+          <div>
+            <a href=`/notes/${post.id}` class="note-datetime">{formatDateCST(post.data.datetime)}</a>
+            <Like media="notes" media_id={post.id} />
+          </div>
           <Content />
           <div class="note-hashtags">
             {
