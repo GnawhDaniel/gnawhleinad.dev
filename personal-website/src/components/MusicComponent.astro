@@ -1,4 +1,6 @@
 ---
+import Like from './Like.astro';
+
 interface Props {
   id: string;
   videoPath: string;
@@ -13,10 +15,19 @@ const { id, videoPath, caption, width = "60%", label } = Astro.props;
   <video controls style={`width: ${width}`}>
     <source src={videoPath} type="video/mp4" />
   </video>
-  <p>{caption} ({label})</p>
+  <div class="description">
+    <p>{caption} ({label})</p>
+    <Like media="music" media_id={id}/>
+  </div>
 </div>
 
 <style>
+  .description {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
   .card {
     margin: auto;
     width: 95%;
