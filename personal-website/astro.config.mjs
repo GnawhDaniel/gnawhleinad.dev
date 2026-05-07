@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
+import { setupIntegration } from "./integrations/db_update";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,4 +19,5 @@ export default defineConfig({
           }
   }],
 
+  integrations: [setupIntegration],
 });
