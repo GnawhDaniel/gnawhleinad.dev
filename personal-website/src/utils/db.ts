@@ -23,7 +23,6 @@ function validateFormat(media: string, media_id: string): boolean {
 
 export async function getLikes(media: string, media_id: string) {
   if (!validateFormat(media, media_id)) return; // Exit function if incorrect formatting
-
   const [like] = await db
     .select()
     .from(likesTable)
@@ -48,4 +47,13 @@ export async function incrementLike(media: string, media_id: string) {
         and(eq(likesTable.media, media), eq(likesTable.media_id, media_id)),
       );
   }
+}
+
+export async function getAllLikes(media: string) {
+  const likes = await db
+    .select()
+    .from(likesTable)
+    .where(eq(likesTable.media, media));
+
+  return Object.fromEntries(likes.map((like) => [like.media_id, like.likes]));
 }

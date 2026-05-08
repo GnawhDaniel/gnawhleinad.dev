@@ -2,13 +2,23 @@
 interface Props {
   media: string;
   media_id: string;
+  likes: number;
 }
 
-const { media, media_id } = Astro.props;
+const { media, media_id, likes } = Astro.props;
 ---
 
 <span>
   <button class="like-button" data-media={media} data-media-id={media_id}>
+    {
+      () => {
+        if (likes === 0) {
+          return "Like?";
+        } else {
+          return `Like? (${likes})`;
+        }
+      }
+    }
   </button>
 </span>
 
@@ -30,10 +40,16 @@ const { media, media_id } = Astro.props;
     const media = button.dataset.media || "";
     const mediaId = button.dataset.mediaId || "";
 
-    // Get likes (client-side)
-    const { likes: likes } = await fetch(
-      `/api/likes?media=${media}&media_id=${mediaId}`,
-    ).then((r) => r.json());
+    // Get Likes count if already liked
+    const match = button.innerText.match(/\((\d+)\)/);
+    const currentCount = match ? parseInt(match[1], 10) : 0;
+
+    // This localstorage method can technically can allow a user
+    // to like ~113,636 items depending on length. Localstorage max limit is 5MB
+    if (localStorage.getItem(`liked_${media}_${mediaId}`)) {
+      button.disabled = true;
+      button.textContent = `Liked! (${currentCount})`;
+    }
 
     button.addEventListener("click", async (event) => {
       localStorage.setItem(`liked_${media}_${mediaId}`, "thank you! <3");
@@ -45,23 +61,13 @@ const { media, media_id } = Astro.props;
         body: JSON.stringify({ media: media, media_id: mediaId }),
       });
 
-      button.textContent = `Liked! (${likes + 1})`; // optimtimistic update
+      // Get Updated Likes
+      const { likes: likes } = await fetch(
+        `/api/likes?media=${media}&media_id=${mediaId}`,
+      ).then((r) => r.json());
+
+      button.textContent = `Liked! (${likes})`;
       button.disabled = true;
     });
-
-    // This localstorage method can technically can allow a user
-    // to like ~113,636 items. Localstorage max limit is 5MB
-    if (localStorage.getItem(`liked_${media}_${mediaId}`)) {
-      button.disabled = true;
-      button.textContent = `Liked! (${likes})`;
-    } else
-    {
-      if (likes) {
-        button.textContent = `Like? (${likes})`;
-      }
-      else {
-        button.textContent = `Like?`;
-      }
-    }
   });
 </script>
