@@ -7,14 +7,14 @@ import { join } from "node:path";
 async function updateDB() {
   // Update DB with new notes & music
   const notesDir = join(process.cwd(), "src/content/notes");
-  // const musicDir = join(process.cwd(), "src/content/music");
+  const musicDir = join(process.cwd(), "src/content/music");
 
   const notes = await readdir(notesDir);
-  // const music = await readdir(musicDir);
+  const music = await readdir(musicDir);
 
   const rows = [
     ...notes.map((file) => ({ media: "notes", media_id: file.replace(/\.md$/, ""), likes: 0 })),
-    // ...music.map((file) => ({ media: "music", media_id: file.replace(/\.md$/, ""), likes: 0 })),
+    ...music.map((file) => ({ media: "music", media_id: file.replace(/\.yaml$/, ""), likes: 0 })),
   ];
 
   await db.insert(likesTable).values(rows).onConflictDoNothing();

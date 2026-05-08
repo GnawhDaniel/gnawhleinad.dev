@@ -9,3 +9,5 @@ server/
 .vscode
 tools/
 public/video
+*.db
+test.ts

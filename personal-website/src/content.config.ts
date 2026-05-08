@@ -12,4 +12,16 @@ const notes = defineCollection({
   }),
 });
 
-export const collections = { notes };
+const music = defineCollection({
+    loader: glob({ pattern: "**/*.yaml", base: "./src/content/music" }),
+    schema: z.object({
+      title: z.string(),
+      artist: z.string(),
+      date: z.coerce.date(),
+      type: z.string(),
+      url: z.string()
+    })
+
+})
+
+export const collections = { notes, music };

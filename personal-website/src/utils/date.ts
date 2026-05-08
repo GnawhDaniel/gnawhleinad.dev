@@ -1,4 +1,4 @@
-export function formatDateCST(date: Date): string {
+export function formatDateCST(date: Date, delimiter: string = "-", time: boolean = true): string {
   const cst = new Date(
     date.toLocaleString("en-US", { timeZone: "America/Chicago" }),
   );
@@ -13,5 +13,8 @@ export function formatDateCST(date: Date): string {
   hours = hours % 12 || 12;
   const HH = String(hours)
 
-  return `${yyyy}-${mm}-${dd} @ ${HH}:${minutes}${ampm}`;
+  if (time) {
+    return `${yyyy}${delimiter}${mm}${delimiter}${dd} @ ${HH}:${minutes}${ampm}`;
+  }
+  return `${yyyy}${delimiter}${mm}${delimiter}${dd}`;
 }

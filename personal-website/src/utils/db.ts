@@ -9,7 +9,7 @@ function validateFormat(media: string, media_id: string): boolean {
   // Validate media and media_id
   const mediaTypes = ["music", "notes"];
   const notesPattern = /^\d{4}-\d{2}-\d{2}-[0-9a-z]{2}$/;
-  const musicPattern = /^[a-f0-9]{32}$/;
+  const musicPattern = /^.*$/;
 
   if (!mediaTypes.includes(media)) {
     return false;
@@ -22,6 +22,8 @@ function validateFormat(media: string, media_id: string): boolean {
 }
 
 export async function getLikes(media: string, media_id: string) {
+  if (!validateFormat(media, media_id)) return; // Exit function if incorrect formatting
+
   const [like] = await db
     .select()
     .from(likesTable)
@@ -37,7 +39,6 @@ export async function incrementLike(media: string, media_id: string) {
     .from(likesTable)
     .where(and(eq(likesTable.media, media), eq(likesTable.media_id, media_id)));
 
-
   if (like) {
     // If "media like" row exists in table
     await db
@@ -46,11 +47,5 @@ export async function incrementLike(media: string, media_id: string) {
       .where(
         and(eq(likesTable.media, media), eq(likesTable.media_id, media_id)),
       );
-  } else {
-    // Check if file exists before creating new row
-
-    await db
-      .insert(likesTable)
-      .values({ media: media, media_id: media_id, likes: 1 });
   }
 }

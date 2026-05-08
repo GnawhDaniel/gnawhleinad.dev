@@ -1,25 +1,32 @@
 ---
-import Like from './Like.astro';
+import Like from "./Like.astro";
+import { getCollection } from "astro:content";
+import { formatDateCST } from "../utils/date";
 
-interface Props {
-  id: string;
-  videoPath: string;
-  caption: string;
-  width?: string;
-  label: "cover" | "original";
-}
-const { id, videoPath, caption, width = "60%", label } = Astro.props;
+const musics = (await getCollection("music")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
 ---
 
-<div id={id} class="card">
-  <video controls style={`width: ${width}`}>
-    <source src={videoPath} type="video/mp4" />
-  </video>
-  <div class="description">
-    <p>{caption} ({label})</p>
-    <Like media="music" media_id={id}/>
-  </div>
-</div>
+{
+  musics.map(async (music) => {
+    return (
+      <div id={music.id} class="card">
+        <video controls style={`max-height: 650px`}>
+          <source src={music.data.url} />
+        </video>
+        <div class="description">
+          <p>
+            {formatDateCST(music.data.date, ".", false)} //{" "}
+            {music.data.artist === "Daniel H" ? "" : `${music.data.artist} - `}
+            {music.data.title} ({music.data.type})
+          </p>
+          <Like media="music" media_id={music.id} />
+        </div>
+      </div>
+    );
+  })
+}
 
 <style>
   .description {
