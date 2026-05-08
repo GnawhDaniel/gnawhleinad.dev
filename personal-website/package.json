@@ -6,12 +6,13 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "npx drizzle-kit push && astro dev",
+    "build": "npx drizzle-kit push && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/node": "^10.1.0",
     "@libsql/client": "^0.17.3",
     "astro": "^6.3.0",
     "dotenv": "^17.4.2",

@@ -2,13 +2,14 @@
 import Like from "./Like.astro";
 import { getCollection } from "astro:content";
 import { formatDateCST } from "../utils/date";
+import { getAllLikes } from "../utils/db";
 
 const musics = (await getCollection("music")).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),  
 );
 
 
-const { likes } = await fetch(new URL("/api/likes?media=music", Astro.url)).then((r) => r.json());
+const likes  = await getAllLikes("music");
 
 ---
 

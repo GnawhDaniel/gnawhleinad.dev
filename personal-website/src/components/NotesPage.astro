@@ -3,12 +3,13 @@ import { formatDateCST } from '../utils/date';
 import { getCollection, render } from 'astro:content';
 import Header from './Header.astro';
 import Like from './Like.astro';
+import { getAllLikes } from '../utils/db';
 
 const notes = (await getCollection("notes")).sort(
   (a, b) => b.data.datetime.valueOf() - a.data.datetime.valueOf(),
 );
 
-const { likes } = await fetch(new URL("/api/likes?media=notes", Astro.url)).then((r) => r.json());
+const likes  = await getAllLikes("notes");
 
 ---
 <Header title="Notes"/>

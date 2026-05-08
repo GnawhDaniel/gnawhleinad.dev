@@ -2,6 +2,8 @@
 import { defineConfig, fontProviders } from "astro/config";
 import { setupIntegration } from "./integrations/db_update";
 
+import node from "@astrojs/node";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://gnawhleinad.dev",
@@ -20,4 +22,8 @@ export default defineConfig({
   }],
 
   integrations: [setupIntegration],
+
+  adapter: node({
+    mode: "standalone",
+  }),
 });
