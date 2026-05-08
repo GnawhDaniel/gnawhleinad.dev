@@ -40,13 +40,16 @@ export async function incrementLike(media: string, media_id: string) {
 
   if (like) {
     // If "media like" row exists in table
-    await db
+    const [updated] = await db
       .update(likesTable)
       .set({ likes: sql`${likesTable.likes} + 1` })
       .where(
         and(eq(likesTable.media, media), eq(likesTable.media_id, media_id)),
-      );
+      ).returning();
+      
+      return updated.likes;
   }
+
 }
 
 export async function getAllLikes(media: string) {

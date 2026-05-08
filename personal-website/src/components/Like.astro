@@ -55,16 +55,11 @@ const { media, media_id, likes } = Astro.props;
       localStorage.setItem(`liked_${media}_${mediaId}`, "thank you! <3");
 
       // Update like counter (server-side)
-      await fetch("/api/likes", {
+      const { likes: likes } = await fetch("/api/likes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ media: media, media_id: mediaId }),
-      });
-
-      // Get Updated Likes
-      const { likes: likes } = await fetch(
-        `/api/likes?media=${media}&media_id=${mediaId}`,
-      ).then((r) => r.json());
+      }).then((r) => r.json());
 
       button.textContent = `Liked! (${likes})`;
       button.disabled = true;

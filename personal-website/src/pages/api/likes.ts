@@ -5,10 +5,11 @@ import { incrementLike, getLikes, getAllLikes } from "../../utils/db";
 
 export const POST: APIRoute = async ({ request }) => {
   const { media, media_id } = await request.json();
-  await incrementLike(media, media_id);
-  return new Response(null, { status: 200 });
-};
-
+  const likes = await incrementLike(media, media_id);
+    return new Response(JSON.stringify({ likes: likes }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });};
 
 export const GET: APIRoute = async ({ url }) => {
   const media = url.searchParams.get("media") || "";
