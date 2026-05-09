@@ -10,3 +10,5 @@ tools/
 public/video
 *.db
 test.ts
+node_modules/
+dist/
