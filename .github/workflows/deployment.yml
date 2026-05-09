@@ -20,6 +20,7 @@ jobs:
             systemctl stop personal-website.service
             cd /var/www/gnawhleinad.dev/
             git pull origin main
+            export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh"
             npm install
             npm run build
             systemctl start personal-website.service
