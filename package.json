@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "npx drizzle-kit push && astro dev",
-    "build": "rm -r dist/ && npx drizzle-kit push && astro build",
+    "build": "rm -rf dist/ && npx drizzle-kit push && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },

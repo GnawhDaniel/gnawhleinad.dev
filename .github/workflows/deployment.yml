@@ -1,0 +1,25 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH and pull changes
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOYMENT_SERVER_IP }}
+          username: ${{ secrets.DEPLOYMENT_SERVER_SSH_KEY }}
+          key: ${{ secrets.DEPLOYMENT_SERVER_USER }}
+          script: |
+            systemctl stop personal-website.service
+            cd /var/www/gnawhleinad.dev/
+            git pull origin main
+            npm install
+            npm run build
+            systemctl start personal-website.service
