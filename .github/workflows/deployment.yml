@@ -14,8 +14,8 @@ jobs:
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.DEPLOYMENT_SERVER_IP }}
-          username: ${{ secrets.DEPLOYMENT_SERVER_SSH_KEY }}
-          key: ${{ secrets.DEPLOYMENT_SERVER_USER }}
+          key: ${{ secrets.DEPLOYMENT_SERVER_SSH_KEY }}
+          username: ${{ secrets.DEPLOYMENT_SERVER_USER }}
           script: |
             systemctl stop personal-website.service
             cd /var/www/gnawhleinad.dev/
