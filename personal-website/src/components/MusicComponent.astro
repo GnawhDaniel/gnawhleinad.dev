@@ -4,13 +4,12 @@ import { getCollection } from "astro:content";
 import { formatDateCST } from "../utils/date";
 import { getAllLikes } from "../utils/db";
 
+
 const musics = (await getCollection("music")).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),  
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
-
-const likes  = await getAllLikes("music");
-
+const likes = await getAllLikes("music");
 ---
 
 {
