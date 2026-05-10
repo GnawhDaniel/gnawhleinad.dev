@@ -8,6 +8,10 @@ import { getCollection, render } from "astro:content";
 const recentNote = (await getCollection("notes")).sort(
   (a, b) => b.data.datetime.valueOf() - a.data.datetime.valueOf(),
 )[0];
+
+const blogs = (await getCollection("blogs")).sort(
+  (a, b) => b.data.datetime.valueOf() - a.data.datetime.valueOf(),
+);
 ---
 
 <!-- About Me -->
@@ -55,9 +59,7 @@ const recentNote = (await getCollection("notes")).sort(
     {
       async () => {
         const { Content } = await render(recentNote);
-        return (
-          <Content/>
-        )
+        return <Content />;
       }
     }
     <div class="note-hashtags">
@@ -94,11 +96,7 @@ const recentNote = (await getCollection("notes")).sort(
         width={250}
       />
     </a>
-    <a
-      slot="media"
-      href="/music#lite-ghostdance"
-      aria-label=""
-    >
+    <a slot="media" href="/music#lite-ghostdance" aria-label="">
       <ThumbnailComponent
         imagePath="/src/assets/thumbnails/lite - ghost dance [Cover].png"
         altText=""
@@ -162,10 +160,26 @@ const recentNote = (await getCollection("notes")).sort(
       />
     </a>
   </Carousel>
+  
+  <hr class="hr">
+
+  <Section header="Blogs" url="/blogs" linkText="" />
+  <div>
+    {
+      blogs.map((blog) => (
+        <div class="blog-post">
+          <a href={`/blogs/${blog.id}`}>
+            <p>{blog.data.title}</p>
+          </a>
+          <p class="note-datetime">{formatDateCST(blog.data.datetime)}</p>
+        </div>
+      ))
+    }
+  </div>
+
 </main>
 
 <style>
-
   video {
     max-width: 400px;
   }
@@ -202,5 +216,16 @@ const recentNote = (await getCollection("notes")).sort(
     display: flex;
     gap: 1rem;
     margin-top: 0.5rem;
+  }
+  
+  .blog-post {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-top: 1.15rem;
+  }
+
+  .blog-post p {
+    margin: 0;
   }
 </style>

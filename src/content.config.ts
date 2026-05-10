@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { hash } from "node:crypto";
 
 // Astro Website Collections (not to do with SQL)
 
@@ -24,4 +25,14 @@ const music = defineCollection({
 
 })
 
-export const collections = { notes, music };
+const blogs = defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/blogs" }),
+    schema: z.object({
+      title: z.string(),
+      datetime: z.coerce.date(),
+      hashtags: z.array(z.string()).optional().default([]),
+    })
+
+})
+
+export const collections = { notes, music, blogs };
