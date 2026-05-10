@@ -16,7 +16,7 @@ const likes = await getAllLikes("music");
   musics.map(async (music) => {
     return (
       <div id={music.id} class="card">
-        <video controls style={`max-height: 650px`}>
+        <video controls>
           <source src={music.data.url} />
         </video>
         <div class="description">
@@ -33,6 +33,17 @@ const likes = await getAllLikes("music");
 }
 
 <style>
+  video {
+    max-height: 650px; 
+  }
+
+  @media (max-width: calc(140vh)) {
+    video {
+      /* max-height: 200px; */
+      width: 100%;
+    }
+  }
+
   .description {
     display: flex;
     align-items: center;
@@ -41,11 +52,10 @@ const likes = await getAllLikes("music");
 
   .card {
     margin: auto;
-    width: 95%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 4em;
+    margin-bottom: 4rem;
   }
 
   video {
