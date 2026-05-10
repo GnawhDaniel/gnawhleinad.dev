@@ -46,11 +46,16 @@ import { Font } from "astro:assets";
     --color-secondary-text: rgb(140, 140, 140);
     --font-size-base: 16px;
     --font-size-header: 25px;
+    --mobile-breakpoint: 600px;
+
+  }
+
+  html {
+    font-size: var(--font-size-base);
   }
 
   body {
     font-family: var(--font-MPlus1P);
-    font-size: var(--font-size-base);
     background-color: var(--color-bg);
     color: var(--color-primary-text);
 
