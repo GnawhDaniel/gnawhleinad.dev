@@ -47,18 +47,19 @@ import { Font } from "astro:assets";
     --font-size-header: 25px;
   }
 
-  html,
   body {
-    margin: 0;
     font-family: var(--font-MPlus1P);
     font-size: var(--font-size-base);
     background-color: var(--color-bg);
     color: var(--color-primary-text);
 
-    width: 98%;
+    width: 95%;
+    /* max-width: 90rem; */
     display: flex;
     flex-direction: column;
     margin: auto;
+    padding: 0 1.5rem;
+
   }
 
   a,
