@@ -26,4 +26,10 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
+
+  image: {
+    domains: ["astro.build", "d3ei3pjq3pqwq5.cloudfront.net"],
+    responsiveStyles: true,
+    objectFit: "contain",
+  }
 });

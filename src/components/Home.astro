@@ -4,6 +4,7 @@ import { formatDateCST } from "../utils/date";
 import Section from "./Section.astro";
 import ThumbnailComponent from "./ThumbnailComponent.astro";
 import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
 
 const recentNote = (await getCollection("notes")).sort(
   (a, b) => b.data.datetime.valueOf() - a.data.datetime.valueOf(),
@@ -12,6 +13,10 @@ const recentNote = (await getCollection("notes")).sort(
 const blogs = (await getCollection("blogs")).sort(
   (a, b) => b.data.datetime.valueOf() - a.data.datetime.valueOf(),
 );
+
+const album = (await getCollection("album"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 10);
 ---
 
 <!-- About Me -->
@@ -27,15 +32,12 @@ const blogs = (await getCollection("blogs")).sort(
     </p>
     <p>Lives in the States where the summers are way too hot and humid.</p>
     <p>
-      Currently spends time studying for the CCNA, learning Japanese,
-       and tinkering on a home server.
+      Currently spends time studying for the CCNA, learning Japanese, and
+      tinkering on a home server.
     </p>
   </div>
 
   <!-- Links -->
-  <!-- <nav class="professional">
-    <a href="/pages/cv"> CV </a>
-  </nav> -->
   <nav class="pages">
     <a href="/bookmarks"> Bookmarks </a>
   </nav>
@@ -46,25 +48,24 @@ const blogs = (await getCollection("blogs")).sort(
 
   <hr class="hr" />
 
-  <Section header="Notes" url="/notes" linkText="All" />
-  <div class="latest-note">
-    <p class="note-datetime">
-      {formatDateCST(recentNote.data.datetime)}
-    </p>
+  <Carousel header="Album" url="/album">
     {
-      async () => {
-        const { Content } = await render(recentNote);
-        return <Content />;
-      }
+      album.map((image) => (
+        <a
+          slot="media"
+          href={`/album#${image.id}`}
+          aria-label={`Redirect to album entry from ${formatDateCST(image.data.date)}`}
+        >
+          <Image
+            src={image.data.url}
+            alt={image.data.caption}
+            inferSize={true}
+            class="carousel-album-image"
+          />
+        </a>
+      ))
     }
-    <div class="note-hashtags">
-      {
-        recentNote.data.hashtags.map((hashtag) => (
-          <p class="hashtag">{hashtag}</p>
-        ))
-      }
-    </div>
-  </div>
+  </Carousel>
 
   <hr class="hr" />
 
@@ -155,8 +156,30 @@ const blogs = (await getCollection("blogs")).sort(
       />
     </a>
   </Carousel>
-  
-  <hr class="hr">
+
+  <hr class="hr" />
+
+  <Section header="Notes" url="/notes" linkText="All" />
+  <div class="latest-note">
+    <p class="note-datetime">
+      {formatDateCST(recentNote.data.datetime)}
+    </p>
+    {
+      async () => {
+        const { Content } = await render(recentNote);
+        return <Content />;
+      }
+    }
+    <div class="note-hashtags">
+      {
+        recentNote.data.hashtags.map((hashtag) => (
+          <p class="hashtag">{hashtag}</p>
+        ))
+      }
+    </div>
+  </div>
+
+  <hr class="hr" />
 
   <Section header="Blogs" url="/blogs" linkText="" />
   <div>
@@ -171,10 +194,17 @@ const blogs = (await getCollection("blogs")).sort(
       ))
     }
   </div>
-
 </main>
 
 <style>
+  .carousel-album-image {
+    width: 100%;
+    max-height: 225px;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+  }
+
   video {
     max-width: 400px;
   }
@@ -212,7 +242,7 @@ const blogs = (await getCollection("blogs")).sort(
     gap: 1rem;
     margin-top: 0.5rem;
   }
-  
+
   .blog-post {
     display: flex;
     flex-direction: column;

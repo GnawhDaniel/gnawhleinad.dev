@@ -7,7 +7,7 @@ export const db = drizzle(process.env.DB_FILE_NAME!);
 
 function validateFormat(media: string, media_id: string): boolean {
   // Validate media and media_id
-  const mediaTypes = ["music", "notes", "blogs"];
+  const mediaTypes = ["music", "notes", "blogs", "album"];
   const notesPattern = /^\d{4}-\d{2}-\d{2}-[0-9a-z]{2}$/;
   const musicPattern = /^.*$/;
 

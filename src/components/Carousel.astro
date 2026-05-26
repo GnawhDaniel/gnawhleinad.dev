@@ -1,11 +1,19 @@
 ---
 import Section from "./Section.astro"
+
+interface Props {
+  header: string;
+  url?: string;
+  linkText?: string;
+}
+
+const { header, url = "/", linkText = "All" } = Astro.props;
 ---
 
 <Section
-  header="Music"
-  url="/music"
-  linkText="All"
+  header={header}
+  url={url}
+  linkText={linkText}
 />
 <div class="carousel">
   <slot name="media"/>
