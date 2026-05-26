@@ -20,7 +20,7 @@ const likes = await getAllLikes("album");
           src={entry.data.url}
           alt={entry.data.caption}
           inferSize={true}
-          class="album-image"
+          class={`album-image ${entry.data.orientation}`}
         />
         <div class="description">
           <p>
@@ -40,11 +40,39 @@ const likes = await getAllLikes("album");
 
 <style>
   .album-image {
-    width: fit-content;
-    max-height: 700px;
     object-fit: contain;
-    display: block;
     margin: auto;
+  }
+
+  .portrait {
+    max-width: 100%;
+    max-height: 700px;
+  }
+
+  .landscape {
+    height: auto;
+    max-width: 1000px;
+  }
+
+  @media (width < 1100px) {
+    .landscape {
+      max-width: 800px;
+    }
+  }
+
+  @media (width < 900px) {
+    .landscape {
+      max-width: 600px;
+    }
+  }
+
+  @media (width < 700px) {
+    .portrait {
+      max-height: 500px;
+    }
+    .landscape {
+      max-width: 370px;
+    }
   }
 
   .description {

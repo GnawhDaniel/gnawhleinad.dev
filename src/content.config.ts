@@ -41,6 +41,7 @@ const album = defineCollection({
     date: z.coerce.date(),
     location: z.string(),
     url: z.string(),
+    orientation: z.string(),
   }),
 });
 
