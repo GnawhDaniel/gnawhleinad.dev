@@ -1,8 +1,8 @@
 ---
-import Like from "./Like.astro";
+import Like from "../Like.astro";
 import { getCollection } from "astro:content";
-import { formatDateCST } from "../utils/date";
-import { getAllLikes } from "../utils/db";
+import { formatDateCST } from "../../utils/date";
+import { getAllLikes } from "../../utils/db";
 
 
 const musics = (await getCollection("music")).sort(
