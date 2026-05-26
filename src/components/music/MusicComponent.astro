@@ -17,7 +17,7 @@ const likes = await getAllLikes("music");
     return (
       <div id={music.id} class="card">
         <video controls>
-          <source src={music.data.url} />
+          <source src={encodeURI(music.data.url)} type="video/mp4" />
         </video>
         <div class="description">
           <p>
